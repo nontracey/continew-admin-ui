@@ -313,6 +313,31 @@
   }
 }
 
+.gi_tabs {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  height: 100%;
+
+  .arco-tabs-content {
+    flex: 1;
+    overflow: hidden;
+
+    .arco-tabs-content-list {
+      height: 100%;
+    }
+
+    .arco-tabs-content-item {
+      height: 100%;
+    }
+
+    .arco-tabs-pane {
+      height: 100%;
+      overflow: hidden;
+    }
+  }
+}
+
 .detail{
   height: 100%;
   display: flex;

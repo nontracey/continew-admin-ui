@@ -132,7 +132,7 @@ const reset = () => {
 // 删除
 const onDelete = (record: DictItemResp) => {
   return handleDelete(() => deleteDictItem(record.id), {
-    content: `是否确定删除字典「${record.label}」？`,
+    content: `是否确定删除字典项「${record.label}」？`,
     showModal: true,
   })
 }

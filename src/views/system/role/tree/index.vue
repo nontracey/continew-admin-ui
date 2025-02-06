@@ -4,7 +4,7 @@
       <a-input v-model="searchKey" placeholder="搜索名称/编码" allow-clear>
         <template #prefix><icon-search /></template>
       </a-input>
-      <a-button v-permission="['system:dict:add']" type="primary" @click="onAdd">
+      <a-button v-permission="['system:role:add']" type="primary" @click="onAdd">
         <template #icon><icon-plus /></template>
       </a-button>
     </div>
@@ -30,7 +30,7 @@
           </template>
           <template #extra="node">
             <a-trigger trigger="click" align-point animation-name="slide-dynamic-origin" auto-fit-transform-origin position="bl" scroll-to-close>
-              <icon-more-vertical v-if="has.hasPermOr(['system:dict:update', 'system:dict:delete'])" class="action" />
+              <icon-more-vertical v-if="has.hasPermOr(['system:role:update', 'system:role:delete'])" class="action" />
               <template #content>
                 <RightMenu :data="node" @on-menu-item-click="onMenuItemClick" />
               </template>
@@ -40,7 +40,7 @@
       </div>
     </div>
 
-    <DictAddModal ref="DictAddModalRef" @save-success="getTreeData" />
+    <RoleAddDrawer ref="RoleAddDrawerRef" @save-success="getTreeData" />
   </div>
 </template>
 
@@ -48,9 +48,9 @@
 import { Message, Modal } from '@arco-design/web-vue'
 import type { TreeNodeData } from '@arco-design/web-vue'
 import { mapTree } from 'xe-utils'
-import DictAddModal from './DictAddModal.vue'
+import RoleAddDrawer from '../RoleAddDrawer.vue'
 import RightMenu from './RightMenu.vue'
-import { type DictResp, deleteDict, listDict } from '@/apis/system/dict'
+import { type RoleResp, deleteRole, listRole } from '@/apis/system/role'
 import has from '@/utils/has'
 
 const emit = defineEmits<{
@@ -67,7 +67,7 @@ const select = (keys: Array<any>) => {
   emit('node-click', keys)
 }
 
-interface TreeItem extends DictResp {
+interface TreeItem extends RoleResp {
   popupVisible: boolean
 }
 const dataList = ref<TreeItem[]>([])
@@ -76,7 +76,7 @@ const loading = ref(false)
 const getTreeData = async () => {
   try {
     loading.value = true
-    const { data } = await listDict()
+    const { data } = await listRole({ sort: ['sort,asc'] })
     dataList.value = mapTree(data, (i) => ({
       ...i,
       popupVisible: false,
@@ -112,25 +112,25 @@ const treeData = computed(() => {
   return search(searchKey.value.toLowerCase())
 })
 
-const DictAddModalRef = ref<InstanceType<typeof DictAddModal>>()
+const RoleAddDrawerRef = ref<InstanceType<typeof RoleAddDrawer>>()
 // 新增
 const onAdd = () => {
-  DictAddModalRef.value?.onAdd()
+  RoleAddDrawerRef.value?.onAdd()
 }
 
 // 点击菜单项
-const onMenuItemClick = (mode: string, node: DictResp) => {
+const onMenuItemClick = (mode: string, node: RoleResp) => {
   if (mode === 'update') {
-    DictAddModalRef.value?.onUpdate(node.id)
+    RoleAddDrawerRef.value?.onUpdate(node.id)
   } else if (mode === 'delete') {
     Modal.warning({
       title: '提示',
-      content: `是否确定删除字典「${node.name}」？`,
+      content: `是否确定删除角色「${node.name}」？`,
       hideCancel: false,
       okButtonProps: { status: 'danger' },
       onBeforeOk: async () => {
         try {
-          const res = await deleteDict(node.id)
+          const res = await deleteRole(node.id)
           if (res.success) {
             Message.success('删除成功')
             await getTreeData()

@@ -219,7 +219,7 @@ onUnmounted(() => {
     overflow: hidden;
 
     :deep(.arco-table-border .arco-table-container) {
-      border: none;
+      // do nothing
     }
   }
 
