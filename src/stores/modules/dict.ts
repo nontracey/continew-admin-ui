@@ -41,4 +41,4 @@ const storeSetup = () => {
   }
 }
 
-export const useDictStore = defineStore('dict', storeSetup, { persist: true })
+export const useDictStore = defineStore('dict', storeSetup)
