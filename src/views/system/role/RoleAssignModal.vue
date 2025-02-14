@@ -9,14 +9,14 @@
     @before-ok="save"
     @close="reset"
   >
-    <UserSelect v-if="visible" ref="UserSelectRef" v-model:value="selectedUsers" :exclude-value="excludeUsers" @select-user="onSelectUser" />
+    <UserSelect v-if="visible" ref="UserSelectRef" v-model:value="selectedUsers" :role-id="dataId" @select-user="onSelectUser" />
   </a-modal>
 </template>
 
 <script setup lang="ts">
 import { Message } from '@arco-design/web-vue'
 import { useWindowSize } from '@vueuse/core'
-import { assignToUsers, listRoleUserId } from '@/apis/system/role'
+import { assignToUsers } from '@/apis/system/role'
 
 const emit = defineEmits<{
   (e: 'save-success'): void
@@ -27,7 +27,6 @@ const { width } = useWindowSize()
 const dataId = ref('')
 const visible = ref(false)
 const selectedUsers = ref<string[]>([])
-const excludeUsers = ref<string[]>([])
 
 // 用户选择回调
 const onSelectUser = (value: string[]) => {
@@ -63,9 +62,6 @@ const save = async () => {
 // 打开
 const onOpen = async (id: string) => {
   dataId.value = id
-  // 初始化选择的用户
-  const { data } = await listRoleUserId(id)
-  excludeUsers.value = data
   selectedUsers.value = []
   visible.value = true
 }

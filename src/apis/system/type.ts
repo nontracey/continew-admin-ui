@@ -38,7 +38,7 @@ export interface UserQuery {
   deptId?: string
   sort: Array<string>
   userIds?: Array<string>
-  excludeUserIds?: Array<string>
+  roleId?: string
 }
 export interface UserPageQuery extends UserQuery, PageQuery {}
 
