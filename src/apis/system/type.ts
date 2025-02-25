@@ -231,34 +231,6 @@ export interface FileQuery {
 export interface FilePageQuery extends FileQuery, PageQuery {
 }
 
-/** 存储类型 */
-export interface StorageResp {
-  id: string
-  name: string
-  code: string
-  type: number
-  accessKey: string
-  secretKey: string
-  endpoint: string
-  bucketName: string
-  domain: string
-  description: string
-  isDefault: boolean
-  sort: number
-  status: number
-  createUserString: string
-  createTime: string
-  updateUserString: string
-  updateTime: string
-}
-export interface StorageQuery {
-  description?: string
-  status?: number
-  sort: Array<string>
-}
-export interface StoragePageQuery extends StorageQuery, PageQuery {
-}
-
 /** 客户端类型 */
 export interface ClientResp {
   id: string
@@ -334,6 +306,7 @@ export interface SiteConfig {
   SITE_TITLE: OptionResp
   SITE_DESCRIPTION: OptionResp
   SITE_COPYRIGHT: OptionResp
+  SITE_DOMAIN: OptionResp
   SITE_BEIAN: OptionResp
 }
 
@@ -358,6 +331,18 @@ export interface MailConfig {
   MAIL_PASSWORD: OptionResp
   MAIL_SSL_ENABLED: OptionResp
   MAIL_SSL_PORT: OptionResp
+}
+
+/** 存储配置类型 */
+export interface StorageConfig {
+  STORAGE_DEFAULT: OptionResp
+  STORAGE_LOCAL_BUCKET: OptionResp
+  STORAGE_LOCAL_ENDPOINT: OptionResp
+  STORAGE_OSS_ACCESS_KEY: OptionResp
+  STORAGE_OSS_SECRET_KEY: OptionResp
+  STORAGE_OSS_BUCKET: OptionResp
+  STORAGE_OSS_ENDPOINT: OptionResp
+  STORAGE_OSS_REGION: OptionResp
 }
 
 /** 登录配置类型 */
