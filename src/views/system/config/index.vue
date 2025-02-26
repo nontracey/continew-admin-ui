@@ -6,19 +6,16 @@
       </a-space>
     </a-row> -->
     <a-tabs v-model:active-key="activeKey" type="card-gutter" size="large" @change="change">
-      <a-tab-pane key="site">
-        <template #title><icon-apps /> 网站配置</template>
+      <a-tab-pane key="1">
+        <template #title><icon-settings /> 基础配置</template>
       </a-tab-pane>
-      <a-tab-pane key="security">
+      <a-tab-pane key="2">
         <template #title><icon-safe /> 安全配置</template>
       </a-tab-pane>
-      <a-tab-pane key="mail">
+      <a-tab-pane key="3">
         <template #title><icon-email /> 邮件配置</template>
       </a-tab-pane>
-      <a-tab-pane key="storage">
-        <template #title><icon-storage /> 存储配置</template>
-      </a-tab-pane>
-      <a-tab-pane key="login">
+      <a-tab-pane key="4">
         <template #title><icon-lock /> 登录配置</template>
       </a-tab-pane>
     </a-tabs>
@@ -30,37 +27,35 @@
 
 <script setup lang="ts">
 import { useRoute, useRouter } from 'vue-router'
-import SiteSetting from './components/SiteSetting.vue'
+import BasicSetting from './components/BasicSetting.vue'
 import SecuritySetting from './components/SecuritySetting.vue'
 import MailSetting from './components/MailSetting.vue'
 import LoginSetting from './components/LoginSetting.vue'
-import StorageSetting from './components/StorageSetting.vue'
 
 defineOptions({ name: 'SystemConfig' })
 
 const PanMap: Record<string, Component> = {
-  site: SiteSetting,
-  security: SecuritySetting,
-  mail: MailSetting,
-  storage: StorageSetting,
-  login: LoginSetting,
+  1: BasicSetting,
+  2: SecuritySetting,
+  3: MailSetting,
+  4: LoginSetting,
 }
 
 const route = useRoute()
 const router = useRouter()
-const activeKey = ref('site')
+const activeKey = ref('1')
 watch(
   () => route.query,
   () => {
-    if (route.query.tab) {
-      activeKey.value = String(route.query.tab)
+    if (route.query.tabKey) {
+      activeKey.value = String(route.query.tabKey)
     }
   },
   { immediate: true },
 )
 const change = (key: string | number) => {
   activeKey.value = key as string
-  router.replace({ path: route.path, query: { tab: key } })
+  router.replace({ path: route.path, query: { tabKey: key } })
 }
 </script>
 
