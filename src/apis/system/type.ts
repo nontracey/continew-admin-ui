@@ -259,7 +259,7 @@ export interface StorageQuery {
 export interface StoragePageQuery extends StorageQuery, PageQuery {
 }
 
-/** 客户端类型 */
+/** 终端类型 */
 export interface ClientResp {
   id: string
   clientId: string

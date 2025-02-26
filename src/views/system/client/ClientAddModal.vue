@@ -32,7 +32,7 @@ const { width } = useWindowSize()
 const dataId = ref('')
 const visible = ref(false)
 const isUpdate = computed(() => !!dataId.value)
-const title = computed(() => (isUpdate.value ? '修改客户端' : '新增客户端'))
+const title = computed(() => (isUpdate.value ? '修改终端' : '新增终端'))
 const formRef = ref<InstanceType<typeof GiForm>>()
 const { client_type, auth_type_enum } = useDict('auth_type_enum', 'client_type')
 
@@ -56,20 +56,20 @@ const handleGenerate = () => {
 
 const columns: Columns = reactive([
   {
-    label: '客户端 Key',
+    label: '终端 Key',
     field: 'clientKey',
     type: 'input',
-    rules: [{ required: true, message: '请输入客户端 Key' }],
+    rules: [{ required: true, message: '请输入终端 Key' }],
     span: 2,
     disabled: () => {
       return isUpdate.value
     },
   },
   {
-    label: '客户端秘钥',
+    label: '终端秘钥',
     field: 'clientSecret',
     type: 'input',
-    rules: [{ required: true, message: '请输入客户端秘钥' }],
+    rules: [{ required: true, message: '请输入终端秘钥' }],
     span: 2,
     disabled: () => {
       return isUpdate.value
@@ -97,11 +97,11 @@ const columns: Columns = reactive([
     rules: [{ required: true, message: '请选择认证类型' }],
   },
   {
-    label: '客户端类型',
+    label: '终端类型',
     field: 'clientType',
     type: 'select',
     options: client_type,
-    rules: [{ required: true, message: '请选择客户端类型' }],
+    rules: [{ required: true, message: '请选择终端类型' }],
   },
   {
     label: () => (
