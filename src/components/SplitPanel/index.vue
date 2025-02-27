@@ -1,11 +1,13 @@
 <template>
-  <div ref="rootRef" class="ca-split-panel" :class="{
-    'is-vertical': vertical,
-    'is-resizing': resizing,
-    'is-collapse': isCollapse,
-    'is-responsive': isResponsive,
-    'is-mobile': isMobile,
-  }" :style="customStyle">
+  <div
+    ref="rootRef" class="ca-split-panel" :class="{
+      'is-vertical': vertical,
+      'is-resizing': resizing,
+      'is-collapse': isCollapse,
+      'is-responsive': isResponsive,
+      'is-mobile': isMobile,
+    }" :style="customStyle"
+  >
     <div class="container" :style="sideStyle">
       <div ref="sideRef" class="ca-split-panel__side">
         <div class="ca-split-panel__content">
@@ -15,10 +17,12 @@
       <!-- 竖线和按钮 -->
       <div class="divider-container">
         <div v-show="!isCollapse" class="divider"></div>
-        <div v-if="allowCollapse" class="ca-split-panel__collapse-trigger" :class="{
-          'is-collapse': isCollapse,
-          'is-mobile': isMobile,
-        }" @click="toggleCollapse">
+        <div
+          v-if="allowCollapse" class="ca-split-panel__collapse-trigger" :class="{
+            'is-collapse': isCollapse,
+            'is-mobile': isMobile,
+          }" @click="toggleCollapse"
+        >
           <div class="ca-split-panel__collapse-trigger-icon">
             <IconRight v-if="isCollapse" size="20" />
             <IconLeft v-else size="20" />

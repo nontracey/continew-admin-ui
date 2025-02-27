@@ -4,7 +4,7 @@
     :title="title"
     :mask-closable="false"
     :esc-to-close="false"
-    :width="width >= 600 ? 600 : '100%'"
+    :width="width >= 500 ? 500 : '100%'"
     @before-ok="save"
     @close="reset"
   >

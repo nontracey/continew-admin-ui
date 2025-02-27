@@ -1,10 +1,5 @@
 <template>
   <div class="gi_page">
-    <!-- <a-row justify="space-between" align="center" class="header page_header">
-      <a-space wrap>
-        <div class="title">用户管理</div>
-      </a-space>
-    </a-row> -->
     <SplitPanel size="20%">
       <template #left>
         <DeptTree @node-click="handleSelectDept" />
@@ -22,7 +17,7 @@
           @refresh="search"
         >
           <template #top>
-            <GiForm v-model="queryForm" :options="options" :columns="queryFormColumns" @search="search" @reset="reset"></GiForm>
+            <GiForm v-model="queryForm" search :columns="queryFormColumns" size="medium" @search="search" @reset="reset"></GiForm>
           </template>
           <template #toolbar-left>
             <a-button v-permission="['system:user:add']" type="primary" @click="onAdd">
@@ -102,24 +97,19 @@ import UserDetailDrawer from './UserDetailDrawer.vue'
 import UserResetPwdModal from './UserResetPwdModal.vue'
 import UserUpdateRoleModal from './UserUpdateRoleModal.vue'
 import { type UserResp, deleteUser, exportUser, listUser } from '@/apis/system/user'
-import type { Columns, Options } from '@/components/GiForm'
 import type { TableInstanceColumns } from '@/components/GiTable/type'
 import { DisEnableStatusList } from '@/constant/common'
 import { useDownload, useResetReactive, useTable } from '@/hooks'
 import { isMobile } from '@/utils'
 import has from '@/utils/has'
+import type { ColumnItem } from '@/components/GiForm'
 
 defineOptions({ name: 'SystemUser' })
 
-const options: Options = reactive({
-  form: { layout: 'inline' },
-  grid: { cols: { xs: 1, sm: 1, md: 2, lg: 3, xl: 3, xxl: 3 } },
-  fold: { enable: true, index: 1, defaultCollapsed: true },
-})
 const [queryForm, resetForm] = useResetReactive({
   sort: ['t1.id,desc'],
 })
-const queryFormColumns: Columns = reactive([
+const queryFormColumns: ColumnItem[] = reactive([
   {
     type: 'input',
     field: 'description',
@@ -133,18 +123,17 @@ const queryFormColumns: Columns = reactive([
   {
     type: 'select',
     field: 'status',
-    options: DisEnableStatusList,
     formItemProps: {
       hideLabel: true,
     },
     props: {
+      options: DisEnableStatusList,
       placeholder: '请选择状态',
     },
   },
   {
     type: 'range-picker',
     field: 'createTime',
-    span: { lg: 2, xl: 2, xxl: 1 },
     formItemProps: {
       hideLabel: true,
     },

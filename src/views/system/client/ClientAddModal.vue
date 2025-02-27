@@ -9,7 +9,7 @@
     @before-ok="save"
     @close="reset"
   >
-    <GiForm ref="formRef" v-model="form" :options="options" :columns="columns" />
+    <GiForm ref="formRef" v-model="form" :columns="columns" layout="vertical" />
   </a-modal>
 </template>
 
@@ -18,7 +18,7 @@ import { Message } from '@arco-design/web-vue'
 import { useWindowSize } from '@vueuse/core'
 import CryptoJS from 'crypto-js'
 import { addClient, getClient, updateClient } from '@/apis/system/client'
-import { type Columns, GiForm, type Options } from '@/components/GiForm'
+import { type ColumnItem, GiForm } from '@/components/GiForm'
 import { DisEnableStatusList } from '@/constant/common'
 import { useResetReactive } from '@/hooks'
 import { useDict } from '@/hooks/app'
@@ -36,12 +36,6 @@ const title = computed(() => (isUpdate.value ? '修改终端' : '新增终端'))
 const formRef = ref<InstanceType<typeof GiForm>>()
 const { client_type, auth_type_enum } = useDict('auth_type_enum', 'client_type')
 
-const options: Options = {
-  form: { size: 'large', layout: 'vertical' },
-  btns: { hide: true },
-  grid: { cols: 2 },
-}
-
 const [form, resetForm] = useResetReactive({
   activeTimeout: 1800,
   timeout: 86400,
@@ -54,13 +48,13 @@ const handleGenerate = () => {
   form.clientSecret = CryptoJS.MD5(`${timestamp}`).toString(CryptoJS.enc.Hex)
 }
 
-const columns: Columns = reactive([
+const columns: ColumnItem[] = reactive([
   {
     label: '终端 Key',
     field: 'clientKey',
     type: 'input',
     rules: [{ required: true, message: '请输入终端 Key' }],
-    span: 2,
+    span: 24,
     disabled: () => {
       return isUpdate.value
     },
@@ -70,7 +64,7 @@ const columns: Columns = reactive([
     field: 'clientSecret',
     type: 'input',
     rules: [{ required: true, message: '请输入终端秘钥' }],
-    span: 2,
+    span: 24,
     disabled: () => {
       return isUpdate.value
     },
@@ -89,8 +83,8 @@ const columns: Columns = reactive([
     label: '认证类型',
     field: 'authType',
     type: 'select',
-    options: auth_type_enum,
     props: {
+      options: auth_type_enum,
       multiple: true,
       maxTagCount: 2,
     },
@@ -100,7 +94,9 @@ const columns: Columns = reactive([
     label: '终端类型',
     field: 'clientType',
     type: 'select',
-    options: client_type,
+    props: {
+      options: client_type,
+    },
     rules: [{ required: true, message: '请选择终端类型' }],
   },
   {

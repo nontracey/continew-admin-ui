@@ -10,7 +10,7 @@
   >
     <a-tabs v-model:active-key="activeKey">
       <a-tab-pane key="1" title="生成配置">
-        <GiForm ref="formRef" v-model="form" :options="options" :columns="formColumns" />
+        <GiForm ref="formRef" v-model="form" :columns="formColumns" />
       </a-tab-pane>
       <a-tab-pane key="2" title="字段配置">
         <GiTable
@@ -124,7 +124,7 @@ import { useWindowSize } from '@vueuse/core'
 import { type FieldConfigResp, type GeneratorConfigResp, getGenConfig, listFieldConfig, listFieldConfigDict, saveGenConfig } from '@/apis/code/generator'
 import type { LabelValueState } from '@/types/global'
 import type { TableInstanceColumns } from '@/components/GiTable/type'
-import { type Columns, GiForm, type Options } from '@/components/GiForm'
+import { type ColumnItem, GiForm } from '@/components/GiForm'
 import { useResetReactive } from '@/hooks'
 import { useDict } from '@/hooks/app'
 
@@ -141,15 +141,10 @@ const formRef = ref<InstanceType<typeof GiForm>>()
 const { form_type_enum, query_type_enum } = useDict('form_type_enum', 'query_type_enum')
 const dictList = ref<LabelValueState[]>([])
 
-const options: Options = {
-  form: { size: 'large' },
-  grid: { cols: 2 },
-  btns: { hide: true },
-}
 const [form, resetForm] = useResetReactive({
   isOverride: false,
 })
-const formColumns: Columns = reactive([
+const formColumns: ColumnItem[] = reactive([
   {
     label: '作者名称',
     field: 'author',
