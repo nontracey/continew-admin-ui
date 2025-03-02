@@ -142,7 +142,7 @@ const dicData: Record<string, any> = reactive({})
 const getComponentBindProps = (item: ColumnItem) => {
   // 组件默认配置映射表
   const ConfigMap = new Map<ColumnItem['type'], Partial<ColumnItem['props'] & { placeholder: string }>>([
-    ['input', { allowClear: true, placeholder: `请输入${item.label}`, maxLength: 20 }],
+    ['input', { allowClear: true, placeholder: `请输入${item.label}`, maxLength: 255 }],
     ['input-number', { placeholder: `请输入${item.label}` }],
     ['textarea', { allowClear: false, placeholder: `请输入${item.label}`, maxLength: 200 }],
     ['input-tag', { allowClear: true, placeholder: `请输入${item.label}` }],
